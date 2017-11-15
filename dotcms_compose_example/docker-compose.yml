@@ -1,0 +1,21 @@
+version: "2"
+services:
+  dotcms-app:
+    build:
+      context: . 
+      args:
+        DOTCMS_VERSION: 4.2.0
+    depends_on:
+      - mysql-db
+    ports:
+      - "8080:8080"
+  mysql-db:
+    image: mysql:5.6.38
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: dotcms
+      MYSQL_DATABASE: dotcms
+      MYSQL_USER: dotcms
+      MYSQL_PASSWORD: dotcms
