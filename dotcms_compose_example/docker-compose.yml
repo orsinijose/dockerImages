@@ -9,6 +9,10 @@ services:
       - mysql-db
     ports:
       - "8080:8080"
+    volumes:
+      - "dotcms-assets-data:/opt/dotcms/wwwroot/current/dotserver/tomcat-8.0.18/webapps/ROOT/assets"
+      - "dotcms-dotsecure-data:/opt/dotcms/wwwroot/current/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure"
+      - "dotcms-felix-data:/opt/dotcms/wwwroot/current/dotserver/tomcat-8.0.18/webapps/ROOT/WEB-INF/felix"
   mysql-db:
     image: mysql:5.6.38
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
@@ -19,3 +23,10 @@ services:
       MYSQL_DATABASE: dotcms
       MYSQL_USER: dotcms
       MYSQL_PASSWORD: dotcms
+    volumes:
+      - "dotcms-db-data:/var/lib/mysql/data"
+volumes:
+  dotcms-db-data:
+  dotcms-assets-data:
+  dotcms-dotsecure-data:
+  dotcms-felix-data:
