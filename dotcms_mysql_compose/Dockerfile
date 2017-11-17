@@ -1,8 +1,10 @@
 FROM anapsix/alpine-java:8_jdk
 
 ENV DOTCMS_HOME /opt/dotcms/wwwroot/current
-
 ENV TOMCAT_VERSION 8.0.18
+
+## Setting dotCMS version as passed in as arg during creation of image
+## Arg is set on docker-compose.yml file
 
 ARG DOTCMS_VERSION
 ENV DOTCMS_DISTRO=$DOTCMS_VERSION
@@ -14,9 +16,12 @@ RUN apk add --update bash curl && rm -rf /var/cache/apk/* \
     && rm dotcms_$DOTCMS_DISTRO.tar.gz \
     && chmod +x $DOTCMS_HOME/bin/*.sh \
     && chmod +x $DOTCMS_HOME/dotserver/tomcat-$TOMCAT_VERSION/bin/*.sh
-
-ADD context.xml $DOTCMS_HOME/dotserver/tomcat-8.0.18/webapps/ROOT/META-INF/context.xml
+# Add the configuration plugin with preconfigured database settings
+COPY com.dotcms.config plugins/com.dotcms.config/
 
 EXPOSE 8080 8009 8000
 
-CMD ["sh", "-c", "${DOTCMS_HOME}/bin/startup.sh run"]
+# Deploy plugins
+RUN ["/bin/bash", "bin/deploy-plugins.sh"]
+
+ENTRYPOINT ${DOTCMS_HOME}/bin/startup.sh && sleep 30 && tail -f ${DOTCMS_HOME}/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log

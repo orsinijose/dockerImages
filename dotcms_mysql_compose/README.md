@@ -24,7 +24,7 @@ NOTES:
 - It currently supports dotCMS 4.2.0. 
 - docker-compose.yml file can be edited and DOTCMS_VERSION can point to any existing version of dotCMS.
 - MySQL Passwords and access are configured on docker-compose.yml file.
-- Custom context.xml file is placed on this folder. Dockerfile allows copying this one to default location. Feel free to customize with your own JDBC settings.
+- A com.dotcms.config plugin is in place here for Docker to deploy it once the image is built
 - Same approach for customizing the context.xml file can be applied to other files and scripts, such as bin/startup.sh. Just place your custom files and use a similar call to this one 
 
 `ADD file.ext $DOTCMS_HOME/path/to/file.ext
