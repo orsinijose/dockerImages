@@ -25,11 +25,10 @@ NOTES:
 - docker-compose.yml file can be edited and DOTCMS_VERSION can point to any existing version of dotCMS.
 - MySQL Passwords and access are configured on docker-compose.yml file.
 - A com.dotcms.config plugin is in place here for Docker to deploy it once the image is built
-- Same approach for customizing the context.xml file can be applied to other files and scripts, such as bin/startup.sh. Just place your custom files and use a similar call to this one 
+- Same approach for customizing the context.xml file can be applied to other files and scripts, such as bin/startup.sh. Just place your custom files inside the com.dotcms.plugin file and use a similar call to this one 
 
-`ADD file.ext $DOTCMS_HOME/path/to/file.ext
-`
 
 TO-DO: 
 - Import a SQL dump and place proper scripting.
-- Import Assets and dotsecure folders to Container.
+- Secure assets, dotsecure and felix folders under persistent storage.
+- Secure mysql-data under persistent storage
