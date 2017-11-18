@@ -17,4 +17,4 @@ RUN apk add --update bash curl && rm -rf /var/cache/apk/* \
 
 EXPOSE 8080 8009 8000
 
-CMD ["sh", "-c", "${DOTCMS_HOME}/bin/startup.sh run"]
+ENTRYPOINT ${DOTCMS_HOME}/bin/startup.sh && sleep 30 && tail -f ${DOTCMS_HOME}/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log

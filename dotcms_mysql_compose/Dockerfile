@@ -16,12 +16,14 @@ RUN apk add --update bash curl && rm -rf /var/cache/apk/* \
     && rm dotcms_$DOTCMS_DISTRO.tar.gz \
     && chmod +x $DOTCMS_HOME/bin/*.sh \
     && chmod +x $DOTCMS_HOME/dotserver/tomcat-$TOMCAT_VERSION/bin/*.sh
+
 # Add the configuration plugin with preconfigured database settings
 COPY com.dotcms.config plugins/com.dotcms.config/
 
 EXPOSE 8080 8009 8000
 
-# Deploy plugins
-RUN ["/bin/bash", "bin/deploy-plugins.sh"]
-
-ENTRYPOINT ${DOTCMS_HOME}/bin/startup.sh && sleep 30 && tail -f ${DOTCMS_HOME}/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log
+ENTRYPOINT $DOTCMS_HOME/bin/deploy-plugins.sh \
+&& sleep 1 \ 
+&& $DOTCMS_HOME/bin/startup.sh \
+&& sleep 30 \
+&& tail -f $DOTCMS_HOME/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log
