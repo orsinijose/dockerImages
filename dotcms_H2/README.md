@@ -29,7 +29,7 @@ NOTES:
 
 ```
 docker build -t dotcms_4.2.2 --build-arg DOTCMS_VERSION=4.2.2 . 
-docker run -p 8080:8080 -p 8000:8000 dotcms_4.2.2
+docker run -p 8080:8080 -p 8000:8000 --name dotcms_4.2.2 dotcms_4.2.2
 ```
 
 - Remote debugging is enabled on generated Docker container, under port 8000 (update with your own port if necessary). Then you can remote debug using your IDE (IntelliJ, Eclipse, Visual Studio Code).
