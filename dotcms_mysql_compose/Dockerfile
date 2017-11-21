@@ -22,8 +22,9 @@ COPY com.dotcms.config plugins/com.dotcms.config/
 
 EXPOSE 8080 8009 8000
 
-ENTRYPOINT $DOTCMS_HOME/bin/deploy-plugins.sh \
-&& sleep 1 \ 
+ENTRYPOINT sleep 1 \
+&& $DOTCMS_HOME/bin/deploy-plugins.sh \
+&& sleep 5 \ 
 && $DOTCMS_HOME/bin/startup.sh \
 && sleep 30 \
-&& tail -f $DOTCMS_HOME/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log
+&& tail -n 100 -f $DOTCMS_HOME/dotserver/tomcat-8.0.18/webapps/ROOT/dotsecure/logs/dotcms.log
