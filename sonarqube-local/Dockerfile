@@ -50,5 +50,6 @@ WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/
 COPY sonar.properties $SONARQUBE_HOME/conf/
 COPY sonar-groovy-plugin-1.6-SNAPSHOT.jar $SONARQUBE_HOME/extensions/plugins/
+COPY sonar-shellcheck-plugin-2.0.0.jar $SONARQUBE_HOME/extensions/plugins/
 USER sonarqube
 ENTRYPOINT ["./bin/run.sh"]
