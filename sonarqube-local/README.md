@@ -29,6 +29,6 @@ docker container stop sonarqube-local
 
 - Update sonar.properties file:
     - Modify the sonar.properties file inside this folder.
-    - Run `docker cp sonar.properties $SONARQUBE_HOME/conf/
+    - Run `docker cp sonar.properties $SONARQUBE_HOME/conf/`
     - Login to your Sonarqube server. Under administration panel, restart your Sonarqube server
     - Or: Stop and Start your container.
