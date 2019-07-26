@@ -2,7 +2,7 @@ FROM anapsix/alpine-java:8_jdk
 LABEL maintainer="Jose Orsini <orsini.jose@gmail.com>"
 
 ARG API_PORT=3000
-ARG SERVERLESS_VERSION=1.32.0
+ARG SERVERLESS_VERSION=1.48.4
 
 RUN apk --no-cache update && \
     apk add python-dev curl 
