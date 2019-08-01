@@ -36,9 +36,9 @@ your-image-name:your-tag terragrunt plan
 Bad configuration option: usekeychain
 ```
 
-Follow the same steps.
+Follow these steps.
 
-    - Make a backup of your `~/.ssh/config` file.
-    - Open the  `~/.ssh/config` file.
-    - Remove the occurrences of `UseKeychain yes` in this file. Save.
-    - Re-run the `docker run` command.
+- Make a backup of your `~/.ssh/config` file.
+- Open the  `~/.ssh/config` file.
+- Remove the occurrences of `UseKeychain yes` in this file. Save.
+- Re-run the `docker run` command.
