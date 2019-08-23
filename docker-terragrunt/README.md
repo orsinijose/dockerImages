@@ -15,6 +15,7 @@ docker build --build-arg TF_VERSION=0.12 --build-arg TG_VERSION=0.19 --tag tf-tg
 
 ```
 #!/usr/bin/env bash
+# Run terragrunt plan before applying changes
 docker run --rm \
   -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -24,6 +25,17 @@ docker run --rm \
   -v /path/to/.aws:/root/.aws \
   -w /data/path-to-tf-or-hcl-file-to-evaluate \
 your-image-name:your-tag terragrunt plan
+
+# Non Interactive Apply defaults to yes. Proceed with caution here
+docker run --rm \
+  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
+  -v /root-path/to/terraform/project/:/data \
+  -v /path/to/.ssh:/root/.ssh \
+  -v /path/to/.aws:/root/.aws \
+  -w /data/path-to-tf-or-hcl-file-to-evaluate \
+your-image-name:your-tag terragrunt --terragrunt-non-interactive apply
 ```
 
 3. Other useful tips:
