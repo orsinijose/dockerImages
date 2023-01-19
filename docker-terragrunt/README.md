@@ -14,7 +14,7 @@ docker build --build-arg TF_VERSION=1.3.7 --build-arg TG_VERSION=0.43 --tag terr
 
 ```
 #!/usr/bin/env bash
-docker run -ti -v /Users/josemanuelorsini/Github:/data terra:latest
+docker run -ti --name terradocker -v /Users/josemanuelorsini/Github:/data terra:latest
 ```
 
 3. Add Github and AWS Credentials to your Docker Container.
@@ -24,3 +24,15 @@ docker run -ti -v /Users/josemanuelorsini/Github:/data terra:latest
 5. Other useful tips:
 
 - Make sure that the Root folder of your Terraform inventory is mounted. This way, lookups of parent folders can work as expected.
+- Since the docker container is not removed after exiting it, it can persist the SSH Keys added for Github, though AWS Credentials may expire. It's advised to stop it
+
+```
+docker container stop terradocker
+```
+
+- To start the docker container and log in, run 
+
+```
+docker container start terradocker
+docker exec -ti terradocker /bin/sh
+```
