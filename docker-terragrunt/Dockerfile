@@ -62,4 +62,4 @@ COPY --from=builder /usr/bin/terraform /usr/bin/terraform
 COPY --from=builder /usr/bin/terragrunt /usr/bin/terragrunt
 
 WORKDIR /data
-CMD ["terragrunt", "--version"]
+CMD ["/bin/sh"]
