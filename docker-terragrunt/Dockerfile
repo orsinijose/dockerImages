@@ -45,10 +45,17 @@ RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; t
 	\
 	&& terraform --version \
 	&& terragrunt --version \
-	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" \
+	\
+	&& if [ "${ARCH}" = "arm" ] | [ "${ARCH}" = "arm64" ]; then \
+	  AWSCLI_ARCH="aarch64"; \
+	else \
+      AWSCLI_ARCH="x86_64"; \
+	fi \
+	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
 	&& unzip awscliv2.zip \
-	&& ./aws/install && \
-	rm -rf aws* terra*
+	&& ./aws/install \
+	rm -rf aws* terra* \
+    && mkdir -p /root/.aws 
 
 WORKDIR /data
 CMD ["/bin/bash"]
