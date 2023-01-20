@@ -83,7 +83,9 @@ LABEL \
 RUN set -eux \
 	&& apk add --no-cache \
 		git \
-		openssh-client
+		openssh-client \
+		curl \
+		vim
 
 COPY --from=builder /usr/bin/terraform /usr/bin/terraform
 COPY --from=builder /usr/bin/terragrunt /usr/bin/terragrunt
