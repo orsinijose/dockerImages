@@ -1,35 +1,17 @@
-FROM alpine:3.16 as builder
-
+FROM debian:stable-slim
 # Install build dependencies
-RUN set -eux \
-	&& apk --no-cache add \
-		coreutils \
+RUN apt-get update && apt-get install -y \
+		openssh-client \
 		curl \
+		vim \
+		jq \
 		dpkg \
 		git \
 		unzip
 
 # Get Terraform
-ARG TF_VERSION=latest
-RUN set -eux \
-	&& if [ "${TF_VERSION}" = "latest" ]; then \
-		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-			| tac | tac \
-			| grep -Eo '/terraform/[.0-9]+/\"' \
-			| grep -Eo '[.0-9]+' \
-			| sort -V \
-			| tail -1 )"; \
-	else \
-		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-			| tac | tac \
-			| grep -Eo "/terraform/${TF_VERSION}\.[.0-9]+/\"" \
-			| grep -Eo '[.0-9]+' \
-			| sort -V \
-			| tail -1 )"; \
-	fi \
-	\
-	# Get correct architecture
-	&& if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
+ARG TF_VERSION=1.3.7
+RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \
 		ARCH=amd64; \
@@ -38,25 +20,15 @@ RUN set -eux \
 	elif [ "$(uname -m)" = "armv7l" ]; then \
 		ARCH=arm; \
 	fi \
-	\
 	&& curl --fail -sS -L -O \
-		https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_${ARCH}.zip \
-	&& unzip terraform_${VERSION}_linux_${ARCH}.zip \
+		https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_${ARCH}.zip \
+	&& unzip terraform_${TF_VERSION}_linux_${ARCH}.zip \
 	&& mv terraform /usr/bin/terraform \
 	&& chmod +x /usr/bin/terraform
 
 # Get Terragrunt
-ARG TG_VERSION=latest
-RUN set -eux \
-	&& git clone https://github.com/gruntwork-io/terragrunt /terragrunt \
-	&& cd /terragrunt \
-	&& if [ "${TG_VERSION}" = "latest" ]; then \
-		VERSION="$( git describe --abbrev=0 --tags )"; \
-	else \
-		VERSION="$( git tag | grep -E "v${TG_VERSION}\.[.0-9]+" | sort -Vu | tail -1 )" ;\
-	fi \
-	# Get correct architecture
-	&& if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
+ARG TG_VERSION=v0.43.0
+RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \
 		ARCH=amd64; \
@@ -67,28 +39,16 @@ RUN set -eux \
 	fi \
 	\
 	&& curl --fail -sS -L \
-		https://github.com/gruntwork-io/terragrunt/releases/download/${VERSION}/terragrunt_linux_${ARCH} \
+		https://github.com/gruntwork-io/terragrunt/releases/download/${TG_VERSION}/terragrunt_linux_${ARCH} \
 		-o /usr/bin/terragrunt \
 	&& chmod +x /usr/bin/terragrunt \
 	\
 	&& terraform --version \
-	&& terragrunt --version
-
-
-# Use a clean tiny image to store artifacts in
-FROM alpine:3.16
-LABEL \
-	maintainer="cytopia <cytopia@everythingcli.org>" \
-	repo="https://github.com/cytopia/docker-terragrunt"
-RUN set -eux \
-	&& apk add --no-cache \
-		git \
-		openssh-client \
-		curl \
-		vim
-
-COPY --from=builder /usr/bin/terraform /usr/bin/terraform
-COPY --from=builder /usr/bin/terragrunt /usr/bin/terragrunt
+	&& terragrunt --version \
+	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" \
+	&& unzip awscliv2.zip \
+	&& ./aws/install && \
+	rm -rf aws* terra*
 
 WORKDIR /data
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
