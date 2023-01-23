@@ -5,6 +5,16 @@ RUN apt-get update && apt-get install -y jq ssh curl vim jq zip unzip git python
 && npm install -g serverless@latest \
 && npm install -g depcheck \
 \
+&& if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
+		ARCH=386; \
+	elif [ "$(uname -m)" = "x86_64" ]; then \
+		ARCH=amd64; \
+	elif [ "$(uname -m)" = "aarch64" ]; then \
+		ARCH=arm64; \
+	elif [ "$(uname -m)" = "armv7l" ]; then \
+		ARCH=arm; \
+	fi \
+	\
 && if [ "${ARCH}" = "arm" ] | [ "${ARCH}" = "arm64" ]; then \
     AWSCLI_ARCH="aarch64"; \
 else \
