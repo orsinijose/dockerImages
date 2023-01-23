@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
 		jq \
 		dpkg \
 		git \
-		unzip
+		unzip \
+		python3-pip
 
 # Get Terraform
 ARG TF_VERSION=1.3.7
