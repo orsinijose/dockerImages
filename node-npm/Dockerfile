@@ -1,7 +1,7 @@
-FROM node:18.12.1-slim
+FROM node:18.16.1-slim
 
 RUN apt-get update && apt-get install -y jq ssh curl vim jq zip unzip git python3-pip\
-&& npm install -g npm@9.3.1 \
+&& npm install -g npm@9.7.2 \
 && npm install -g serverless@latest \
 && npm install -g depcheck \
 \
