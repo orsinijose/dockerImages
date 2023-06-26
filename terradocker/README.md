@@ -14,7 +14,7 @@ docker build --build-arg TF_VERSION=1.3.7 --build-arg TG_VERSION=v0.43.0 --tag t
 
 ```
 #!/usr/bin/env bash
-docker run -dti --name terradocker -v /Users/josemanuelorsini/Github:/data terradocker
+docker run -ti --name terradocker -v /Users/josemanuelorsini/Github:/data terradocker
 ```
 
 3. Add Github and AWS Credentials to your Docker Container.
