@@ -55,8 +55,10 @@ RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; t
 	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
 	&& unzip awscliv2.zip \
 	&& ./aws/install \
-	rm -rf aws* terra* \
-    && mkdir -p /root/.aws 
+	&& rm -rf aws* terra* \
+    && mkdir -p /root/.aws \
+	# install Node.js and NPM for some Projects which require Node.js and NPM
+	&& curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
 
 WORKDIR /data
 CMD ["/bin/bash"]
