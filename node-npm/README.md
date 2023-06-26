@@ -9,7 +9,7 @@ docker build --label "version=1.0" --label "maintaner=Jose Orsini <orsini.jose@g
 2. Run the docker image:
 
 ```
-docker run -dti -p 3000:3000 --name node_npm -v /Users/josemanuelorsini/Github:/data node_npm:latest
+docker run -ti -p 3000:3000 --name node_npm -v /Users/josemanuelorsini/Github:/data node_npm:latest
 ```
 
 3. Other useful commands:
