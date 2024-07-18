@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.346.3-2-lts
+FROM jenkins/jenkins:2.426.3-lts
 USER root
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN apt-get update && apt-get install -y lsb-release
