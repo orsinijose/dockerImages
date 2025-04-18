@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 		python3-pip
 
 # Get Terraform
-ARG TF_VERSION=1.4.6
+ARG TF_VERSION=1.11.4
 RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \
@@ -28,7 +28,7 @@ RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; t
 	&& chmod +x /usr/bin/terraform
 
 # Get Terragrunt
-ARG TG_VERSION=v0.46.3
+ARG TG_VERSION=v0.77.19
 RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \
