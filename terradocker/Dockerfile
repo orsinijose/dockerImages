@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
 		dpkg \
 		git \
 		unzip \
-		python3-pip
+		python3-pip \
+		openssl \
+		libc6-dev
 
 # Get Terraform
 ARG TF_VERSION=1.11.4
@@ -51,14 +53,44 @@ RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; t
 	  AWSCLI_ARCH="aarch64"; \
 	else \
       AWSCLI_ARCH="x86_64"; \
-	fi \
-	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
-	&& unzip awscliv2.zip \
-	&& ./aws/install \
-	&& rm -rf aws* terra* \
-    && mkdir -p /root/.aws \
-	# install Node.js and NPM for some Projects which require Node.js and NPM
-	&& curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+	fi
 
-WORKDIR /data
+# Install AWS CLI
+RUN if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "arm64" ]; then \
+AWSCLI_ARCH="aarch64"; \
+else \
+AWSCLI_ARCH="x86_64"; \
+fi \
+&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
+&& unzip awscliv2.zip \
+&& ./aws/install \
+&& rm -rf aws* terra* \
+&& mkdir -p /root/.aws
+
+# Install Node.js and NPM
+ARG NODE_VERSION=22
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+&& apt-get install -y nodejs
+
+# Add a non-root user to run the container
+RUN useradd -ms /bin/bash terradocker \
+&& mkdir -p /home/terradocker/.aws \
+&& chown -R terradocker:terradocker /home/terradocker/.aws \
+&& chown -R terradocker:terradocker /usr/bin/terraform \
+&& chown -R terradocker:terradocker /usr/bin/terragrunt \
+&& chown -R terradocker:terradocker /usr/local/bin/aws \
+&& chown -R terradocker:terradocker /usr/local/aws-cli \
+&& chown -R terradocker:terradocker /usr/bin/node \
+&& chown -R terradocker:terradocker /usr/bin/npm \
+&& terraform --version \
+&& terragrunt --version \
+&& node --version \
+&& aws --version \
+&& npm --version 
+
+USER terradocker
+
+# Set the default working directory
+WORKDIR /home/terradocker
+
 CMD ["/bin/bash"]

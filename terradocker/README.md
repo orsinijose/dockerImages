@@ -6,31 +6,32 @@ Docker image running Terraform and Terragrunt, based on [cytopia/docker-terragru
 
 If `TF_VERSION` and `TG_VERSION` args are not passed in, this will default to `latest` versions of Terraform and Terragrunt.
 
-```
-docker build --build-arg TF_VERSION=1.6.6 --build-arg TG_VERSION=v0.59.3 --tag terradocker .
+```bash
+docker build --platform linux/x86_64 --build-arg TF_VERSION=1.11.4 --build-arg TG_VERSION=v0.77.19 --build-arg NODE_VERSION=22 --tag terradocker:latest .
 ```
 
 2. Run the docker image:
 
-```
+```bash
 #!/usr/bin/env bash
-docker run -ti --name terradocker -v /Users/josemanuelorsini/Github:/data terradocker
+docker run -ti --platform linux/x86_64 --name terradocker -v /Users/josemanuelorsini/Github:/home/terradocker terradocker
 ```
 
-3. Add Github and AWS Credentials to your Docker Container.
+3. Add [Github SSH Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and AWS Credentials to your Docker Container.
 
 4. Go to any path and run terragrunt commands.
 
 5. Other useful tips:
 
 - Make sure that the Root folder of your Terraform inventory is mounted. This way, lookups of parent folders can work as expected.
-- Since the docker container is not removed after exiting it, it can persist the SSH Keys added for Github, though AWS Credentials may expire. It's advised to stop it
+- Since the docker container is not removed after exiting it, it can persist the SSH Keys added for Github, though AWS Credentials may expire.
+- To run:
 
 ```
 docker container stop terradocker
 ```
 
-- To start the docker container and log in, run 
+- To start the docker container and log in, run:
 
 ```
 docker container start terradocker
