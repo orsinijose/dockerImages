@@ -1,33 +1,35 @@
-FROM node:18.16.1-slim
+FROM node:22-slim
 
-RUN apt-get update && apt-get install -y jq ssh curl vim jq zip unzip git python3-pip\
-&& npm install -g npm@9.7.2 \
-&& npm install -g serverless@latest \
-&& npm install -g depcheck \
-\
-&& if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
-		ARCH=386; \
-	elif [ "$(uname -m)" = "x86_64" ]; then \
-		ARCH=amd64; \
-	elif [ "$(uname -m)" = "aarch64" ]; then \
-		ARCH=arm64; \
-	elif [ "$(uname -m)" = "armv7l" ]; then \
-		ARCH=arm; \
-	fi \
-	\
-&& if [ "${ARCH}" = "arm" ] | [ "${ARCH}" = "arm64" ]; then \
-    AWSCLI_ARCH="aarch64"; \
-else \
-    AWSCLI_ARCH="x86_64"; \
-fi \
-&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
-&& unzip awscliv2.zip  \
-&& ./aws/install \
-&& rm -rf aws* \
-&& mkdir -p /root/.aws
+RUN apt-get update && apt-get install -y jq ssh curl vim zip unzip git python3-pip \
+	&& npm install -g npm@latest \
+	&& npm install -g serverless@latest \
+	&& npm install -g depcheck \
+	&& ARCH=$(uname -m) \
+	&& if [ "$ARCH" = "x86_64" ]; then AWSCLI_ARCH="x86_64"; \
+	   elif [ "$ARCH" = "aarch64" ]; then AWSCLI_ARCH="aarch64"; \
+	   elif [ "$ARCH" = "armv7l" ]; then AWSCLI_ARCH="armv7l"; \
+	   else AWSCLI_ARCH="x86_64"; fi \
+	&& curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWSCLI_ARCH}.zip" -o "awscliv2.zip" \
+	&& unzip awscliv2.zip  \
+	&& ./aws/install \
+	&& rm -rf aws* \
+	&& mkdir -p /root/.aws
 
-USER root
+RUN useradd -ms /bin/bash nodelocaluser \
+&& mkdir -p /home/nodelocaluser/.aws \
+&& chown -R nodelocaluser:nodelocaluser /home/nodelocaluser/.aws \
+&& chown -R nodelocaluser:nodelocaluser /usr/local/bin/aws \
+&& chown -R nodelocaluser:nodelocaluser /usr/local/bin/node \
+&& chown -R nodelocaluser:nodelocaluser /usr/local/bin/npm \
+&& chown -R nodelocaluser:nodelocaluser /usr/local/bin/serverless \
+&& node --version \
+&& aws --version \
+&& npm --version \
+&& serverless --version \
+&& python3 --version
 
-WORKDIR /data
+USER nodelocaluser
+
+WORKDIR /home/nodelocaluser
 
 CMD ["/bin/bash"]

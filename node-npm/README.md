@@ -3,7 +3,7 @@
 1. Build the docker image:
 
 ```
-docker build --label "version=1.0" --label "maintaner=Jose Orsini <orsini.jose@gmail.com.com>" -t node_npm:latest .
+docker build --label "version=1.0" --label "maintaner=Jose Orsini <orsini.jose@gmail.com>" -t node_npm:latest .
 ```
 
 2. Run the docker image:
