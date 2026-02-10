@@ -7,14 +7,14 @@ Docker image running Terraform and Terragrunt, based on [cytopia/docker-terragru
 If `TF_VERSION` and `TG_VERSION` args are not passed in, this will default to `latest` versions of Terraform and Terragrunt.
 
 ```bash
-docker build --platform linux/x86_64 --build-arg TF_VERSION=1.11.4 --build-arg TG_VERSION=v0.77.19 --build-arg NODE_VERSION=22 --tag terradocker:latest .
+docker build --platform linux/x86_64 --build-arg TF_VERSION=1.12.2 --build-arg TG_VERSION=v0.99.1 --build-arg NODE_VERSION=22 --tag terradocker:latest .
 ```
 
 2. Run the docker image:
 
 ```bash
 #!/usr/bin/env bash
-docker run -ti --platform linux/x86_64 --name terradocker -v /Users/josemanuelorsini/Github:/home/terradocker terradocker
+docker run -ti --platform linux/x86_64 --name terradocker -v /PathToYourLocal:/home/terradocker terradocker
 ```
 
 3. Add [Github SSH Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and AWS Credentials to your Docker Container.
