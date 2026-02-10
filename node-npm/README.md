@@ -3,13 +3,13 @@
 1. Build the docker image:
 
 ```
-docker build --label "version=1.0" --label "maintaner=Jose Orsini <orsini.jose@gmail.com>" -t node_npm:latest .
+docker build --label "version=1.0" --label "maintaner=Firstname Lastname <your@email.com>" -t node_npm:latest .
 ```
 
 2. Run the docker image:
 
 ```
-docker run -ti -p 3000:3000 --name node_npm -v /Users/josemanuelorsini/Github:/data node_npm:latest
+docker run -ti -p 3000:3000 --name node_npm -v /LocalPathToNPMProjects:/data node_npm:latest
 ```
 
 3. Other useful commands:
