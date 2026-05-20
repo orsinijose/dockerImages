@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 		libc6-dev
 
 # Get Terraform
-ARG TF_VERSION=1.11.4
+ARG TF_VERSION=1.15.3
 RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \
@@ -30,7 +30,7 @@ RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; t
 	&& chmod +x /usr/bin/terraform
 
 # Get Terragrunt
-ARG TG_VERSION=v0.77.19
+ARG TG_VERSION=v1.0.5
 RUN if [ "$(dpkg --print-architecture | awk -F'-' '{print $NF}' )" = "i386" ]; then\
 		ARCH=386; \
 	elif [ "$(uname -m)" = "x86_64" ]; then \

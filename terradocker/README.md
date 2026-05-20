@@ -7,7 +7,7 @@ Docker image running Terraform and Terragrunt, based on [cytopia/docker-terragru
 If `TF_VERSION` and `TG_VERSION` args are not passed in, this will default to `latest` versions of Terraform and Terragrunt.
 
 ```bash
-docker build --platform linux/x86_64 --build-arg TF_VERSION=1.12.2 --build-arg TG_VERSION=v0.99.1 --build-arg NODE_VERSION=22 --tag terradocker:latest .
+docker build --platform linux/x86_64 --build-arg TF_VERSION=1.15.3 --build-arg TG_VERSION=v1.0.5 --build-arg NODE_VERSION=22 --tag terradocker:latest .
 ```
 
 2. Run the docker image:
