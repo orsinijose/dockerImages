@@ -15,11 +15,11 @@ docker build -t myjenkins-blueocean:2.541.2-lts .
 Use this if you do **not** need pipelines to build or run Docker images:
 
 ```bash
-docker build -t myjenkins-blueocean:2.580.1-lts .
+docker build -t myjenkins-blueocean:2.580.2-lts .
 docker run --name jenkins-blueocean --restart=on-failure --detach \
   --publish 8080:8080 --publish 50000:50000 \
   --volume jenkins-data:/var/jenkins_home \
-  myjenkins-blueocean:2.580.1-lts
+  myjenkins-blueocean:2.580.2-lts
 ```
 
 #### 2b. Run Jenkins with Docker (for Docker pipelines)
@@ -46,8 +46,8 @@ docker run \
 Then run Jenkins connected to that daemon:
 
 ```bash
-docker build -t myjenkins-blueocean:2.580.1-lts .
-docker run --name jenkins-blueocean --restart=on-failure --detach \
+docker build -t myjenkins-blueocean:2.580.2-lts .
+docker run --name jenkins-blueocean --detach \
   --network jenkins \
   --env DOCKER_HOST=tcp://docker:2376 \
   --env DOCKER_CERT_PATH=/certs/client \
@@ -55,7 +55,7 @@ docker run --name jenkins-blueocean --restart=on-failure --detach \
   --publish 8080:8080 --publish 50000:50000 \
   --volume jenkins-data:/var/jenkins_home \
   --volume jenkins-docker-certs:/certs/client:ro \
-  myjenkins-blueocean:2.580.1-lts
+  myjenkins-blueocean:2.580.2-lts
 ```
 
 Choose **either** 2a or 2b; the dind setup (2b) is only required for Docker-based pipelines.

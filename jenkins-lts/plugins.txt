@@ -1,4 +1,4 @@
-allure-jenkins-plugin:2.32.0
+allure-jenkins-plugin:2.36.0
 ansicolor:1.0.4
 aws-credentials:254.v978a_5e206a_d7
 aws-java-sdk2-autoscaling:2.33.4-62.vc1a_8df64b_4c9
@@ -17,7 +17,7 @@ commons-text-api:1.15.0-218.va_61573470393
 credentials:1496.vf6821f162d4e
 display-url-api:2.217.va_6b_de84cc74b_
 docker-workflow:572.v950f58993843
-git-parameter:444.vca_b_84d3703c2
+git-parameter:462.463.v496a_59f698e5
 git:5.7.0
 groovy:457.v99900cb_85593
 hidden-parameter:237.v4b_df26c7a_f0e
@@ -26,8 +26,8 @@ jackson2-api:2.20.1-423.v13951f6b_6532
 javax-mail-api:1.6.2-9
 jdk-tool:73.vddf737284550
 junit:1303.v05e2505656b_7
-mailer:522.va_995fa_cfb_8b_d
-matrix-auth:3.2.8
+mailer:534.v1b_36f5864073
+matrix-auth:3.2.10
 matrix-project:840.v812f627cb_578
 node-iterator-api:55.v3b_77d4032326
 pipeline-groovy-lib:752.vdddedf804e72
@@ -38,7 +38,7 @@ pipeline-model-extensions:2.2277.v00573e73ddf1
 pipeline-stage-tags-metadata:2.2236.va_b_88ceec798f
 plain-credentials:199.v9f8e1f741799
 rebuild:338.va_0a_b_50e29397
-saml:4.464.vea_cb_75d7f5e0
+saml:4.623.v7875d61cd9f5
 simple-theme-plugin:211.v5424a_5510e47
 ssh-slaves:3.1071.v0d059c7b_c555
 sshd:3.322.v159e91f6a_550
@@ -48,6 +48,6 @@ trilead-api:2.209.v0e69b_c43c245
 uno-choice:2.8.1
 workflow-aggregator:596.v8c21c963d92d
 workflow-cps:4362.v9b_991749898e
-workflow-durable-task-step:1458.va_2e10a_a_b_7c4d
+workflow-durable-task-step:1479.v56e587f413a_7
 workflow-job:1571.1580.v18e46842c125
 ws-cleanup:0.47

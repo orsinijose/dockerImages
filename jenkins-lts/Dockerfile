@@ -1,7 +1,6 @@
-FROM jenkins/jenkins:2.580.1-lts
+FROM jenkins/jenkins:2.580.2-lts
 USER root
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
-COPY blocked.certs /opt/java/openjdk/lib/security/blocked.certs
 RUN apt-get update && apt-get install -y lsb-release
 RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
   https://download.docker.com/linux/debian/gpg
