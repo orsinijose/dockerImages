@@ -7,7 +7,7 @@ Keep `plugins.txt` in sync with the list required for your environments (interfa
 #### 1. Build the image
 
 ```bash
-docker build -t myjenkins-blueocean:2.541.2-lts .
+docker build -t myjenkins-blueocean:2.580.2-lts .
 ```
 
 #### 2a. Run Jenkins only (no Docker-from-Jenkins)
